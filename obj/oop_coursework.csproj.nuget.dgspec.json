@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Desktop\\oop_coursework\\oop_coursework.csproj": {}
+    "D:\\Desktop\\dasdasd\\oop_coursework\\oop_coursework.csproj": {}
   },
   "projects": {
-    "D:\\Desktop\\oop_coursework\\oop_coursework.csproj": {
+    "D:\\Desktop\\dasdasd\\oop_coursework\\oop_coursework.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Desktop\\oop_coursework\\oop_coursework.csproj",
+        "projectUniqueName": "D:\\Desktop\\dasdasd\\oop_coursework\\oop_coursework.csproj",
         "projectName": "oop_coursework",
-        "projectPath": "D:\\Desktop\\oop_coursework\\oop_coursework.csproj",
+        "projectPath": "D:\\Desktop\\dasdasd\\oop_coursework\\oop_coursework.csproj",
         "packagesPath": "C:\\Users\\userr\\.nuget\\packages\\",
-        "outputPath": "D:\\Desktop\\oop_coursework\\obj\\",
+        "outputPath": "D:\\Desktop\\dasdasd\\oop_coursework\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
