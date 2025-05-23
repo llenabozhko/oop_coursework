@@ -1,0 +1,142 @@
+<local:BaseWindow x:Class="oop_coursework.Views.StudentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:oop_coursework.Views"
+        Title="Student Grade Book" Height="700" Width="1000"
+        WindowStartupLocation="CenterScreen">
+    <Grid Background="#F5F5F5">
+        <Border Margin="30"
+                Background="White"
+                CornerRadius="8"
+                BorderBrush="#E0E0E0"
+                BorderThickness="1"
+                Padding="20">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Welcome Section -->
+                <TextBlock Grid.Row="0"
+                          x:Name="WelcomeText"
+                          FontSize="24"
+                          FontWeight="SemiBold"
+                          Margin="0,0,0,10"/>
+
+                <!-- Student Info Section -->
+                <Border Grid.Row="1"
+                        Background="White"
+                        CornerRadius="8"
+                        Padding="20"
+                        Margin="0,0,0,20"
+                        BorderBrush="#E0E0E0"
+                        BorderThickness="1">
+                    <StackPanel>
+                        <TextBlock Text="Your Specialty"
+                                 FontWeight="SemiBold"
+                                 FontSize="18"
+                                 Margin="0,0,0,10"/>
+                        <TextBlock x:Name="SpecialtyText"
+                                 FontSize="16"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Grades Section -->
+                <Border Grid.Row="2"
+                        Background="White"
+                        CornerRadius="8"
+                        Padding="20"
+                        BorderBrush="#E0E0E0"
+                        BorderThickness="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Your Grades"
+                                 FontWeight="SemiBold"
+                                 FontSize="18"
+                                 Margin="0,0,0,15"/>
+
+                        <DataGrid Grid.Row="1"
+                                x:Name="GradesGrid"
+                                AutoGenerateColumns="False"
+                                IsReadOnly="True"
+                                HeadersVisibility="Column"
+                                GridLinesVisibility="Horizontal"
+                                BorderThickness="1"
+                                BorderBrush="#E0E0E0"
+                                RowHeaderWidth="0"
+                                VerticalGridLinesBrush="Transparent"
+                                HorizontalGridLinesBrush="#E0E0E0"
+                                Background="Transparent"
+                                RowBackground="Transparent"
+                                AlternatingRowBackground="#F8F8F8">
+                            <DataGrid.Resources>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="Padding" Value="10,5"/>
+                                    <Setter Property="FontWeight" Value="SemiBold"/>
+                                </Style>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Padding" Value="10,5"/>
+                                    <Setter Property="Foreground" Value="Black"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="DataGridCell">
+                                                <Border Padding="{TemplateBinding Padding}"
+                                                        BorderThickness="0"
+                                                        Background="{TemplateBinding Background}">
+                                                    <ContentPresenter/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="#E3F2FD"/>
+                                            <Setter Property="Foreground" Value="Black"/>
+                                            <Setter Property="BorderBrush" Value="#2196F3"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.Resources>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Subject"
+                                                  Binding="{Binding Subject.Name}"
+                                                  Width="2*"/>
+                                <DataGridTextColumn Header="Exam Date"
+                                                  Binding="{Binding Subject.ExamDate, StringFormat=d}"
+                                                  Width="*"/>
+                                <DataGridTextColumn Header="Credits"
+                                                  Binding="{Binding Subject.Credits}"
+                                                  Width="*"/>
+                                <DataGridTextColumn Header="Score"
+                                                  Binding="{Binding Score}"
+                                                  Width="*"/>
+                            </DataGrid.Columns>
+                            <DataGrid.RowStyle>
+                                <Style TargetType="DataGridRow">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Subject.IsExamSoon}" Value="True">
+                                            <Setter Property="Background" Value="#FFF3E0"/>
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                            <Setter Property="ToolTip" Value="⚠️ Upcoming Exam! This exam is scheduled within the next 10 days"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                    <Style.Resources>
+                                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#E3F2FD"/>
+                                        <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="#E3F2FD"/>
+                                    </Style.Resources>
+                                </Style>
+                            </DataGrid.RowStyle>
+                        </DataGrid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</local:BaseWindow>
