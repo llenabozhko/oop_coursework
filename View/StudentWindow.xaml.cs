@@ -25,8 +25,8 @@ namespace oop_coursework.Views
             _alerts = new List<string>();
             _studentService = new StudentService(dataService);
 
-            WelcomeText.Text = $"Welcome, {_student.FullName}!";
-            SpecialtyText.Text = $"Specialty: {_student.Specialty}";
+            WelcomeText.Text = $"Вітаємо, {_student.FullName}!";
+            SpecialtyText.Text = $"Спеціальність: {_student.Specialty}";
 
             SemesterTabs.SelectionChanged += SemesterTabs_SelectionChanged;
             LoadGrades();
@@ -36,7 +36,7 @@ namespace oop_coursework.Views
         {
             if (SemesterTabs.SelectedItem is TabItem selectedTab)
             {
-                int semester = selectedTab.Header.ToString() == "Semester 1" ? 1 : 2;
+                int semester = selectedTab.Header.ToString() == "Семестр 1" ? 1 : 2;
                 LoadGrades(semester);
             }
         }

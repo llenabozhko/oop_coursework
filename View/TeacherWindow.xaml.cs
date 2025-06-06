@@ -25,10 +25,10 @@ namespace oop_coursework.Views
             _dataService = dataService;
             _teacherService = new TeacherService(dataService);
 
-            _currentSubject = _teacher.Subject ?? throw new InvalidOperationException("No subject assigned to teacher.");
+            _currentSubject = _teacher.Subject ?? throw new InvalidOperationException("Викладачу не призначено предмет.");
 
-            WelcomeText.Text = $"Welcome, {_teacher.FullName}!";
-            SubjectNameText.Text = $"Subject: {_currentSubject.Name}";
+            WelcomeText.Text = $"Вітаємо, {_teacher.FullName}!";
+            SubjectNameText.Text = $"Предмет: {_currentSubject.Name}";
 
             SemesterComboBox.SelectedIndex = 0;
             SemesterComboBox.SelectionChanged += SemesterComboBox_SelectionChanged;
@@ -78,7 +78,7 @@ namespace oop_coursework.Views
         {
             if (!ExamDatePicker.SelectedDate.HasValue)
             {
-                MessageBox.Show("Please select an Екзамен date.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Будь ласка, виберіть дату екзамену.", "Помилка валідації", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -88,7 +88,7 @@ namespace oop_coursework.Views
             {
                 if (RetakeDatePicker.SelectedDate.Value <= _currentSubject.ExamDate)
                 {
-                    MessageBox.Show("Retake date must be after the main Екзамен date.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Дата перездачі повинна бути після дати основного екзамену.", "Помилка валідації", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
                 _currentSubject.RetakeDate = RetakeDatePicker.SelectedDate.Value;
@@ -97,7 +97,7 @@ namespace oop_coursework.Views
             _dataService.SaveChanges();
             LoadSubjectSettings();
 
-            MessageBox.Show("Settings updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Налаштування успішно оновлено!", "Успіх", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void SaveGrades_Click(object sender, RoutedEventArgs e)
@@ -106,7 +106,7 @@ namespace oop_coursework.Views
             {
                 _teacherService.SaveGrades(studentGrades);
                 LoadStudentGrades();
-                MessageBox.Show("Grades saved successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Оцінки успішно збережено!", "Успіх", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
     }

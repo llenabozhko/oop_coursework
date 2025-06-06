@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:oop_coursework.Views"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        Title="Student Grade Book" Height="700" Width="1000"
+        Title="Залікова книжка студента" Height="700" Width="1000"
         WindowStartupLocation="CenterScreen">
     <Grid Background="#F5F5F5">
         <Border Margin="30"
@@ -35,7 +35,7 @@
                         BorderBrush="#E0E0E0"
                         BorderThickness="1">
                     <StackPanel>
-                        <TextBlock Text="Your Specialty"
+                        <TextBlock Text="Ваша спеціальність"
                                  FontWeight="SemiBold"
                                  FontSize="18"
                                  Margin="0,0,0,10"/>
@@ -59,16 +59,16 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Text="Your Grades"
+                        <TextBlock Text="Ваші оцінки"
                                  FontWeight="SemiBold"
                                  FontSize="18"
                                  Margin="0,0,0,15"/>
 
                         <TabControl Grid.Row="1" x:Name="SemesterTabs" Margin="0,0,0,15">
-                            <TabItem Header="Semester 1">
+                            <TabItem Header="Семестр 1">
                                 <Grid/>
                             </TabItem>
-                            <TabItem Header="Semester 2">
+                            <TabItem Header="Семестр 2">
                                 <Grid/>
                             </TabItem>
                         </TabControl>
@@ -118,10 +118,10 @@
                                 </Style>
                             </DataGrid.Resources>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Subject"
+                                <DataGridTextColumn Header="Предмет"
                                                   Binding="{Binding Subject.Name}"
                                                   Width="2*"/>
-                                <DataGridTextColumn Header="Екзамен Date"
+                                <DataGridTextColumn Header="Дата екзамену"
                                                   Width="*">
                                     <DataGridTextColumn.Binding>
                                         <Binding Path="Subject.ExamDate" StringFormat="d">
@@ -131,19 +131,19 @@
                                         </Binding>
                                     </DataGridTextColumn.Binding>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Header="Credits"
+                                <DataGridTextColumn Header="Кредити"
                                                   Binding="{Binding Subject.Credits}"
                                                   Width="*"/>
-                                <DataGridTextColumn Header="Main Score"
+                                <DataGridTextColumn Header="Основна оцінка"
                                                   Binding="{Binding Score}"
                                                   Width="*"/>
-                                <DataGridTextColumn Header="Retake Score"
+                                <DataGridTextColumn Header="Оцінка перездачі"
                                                   Binding="{Binding RetakeScore}"
                                                   Width="*"/>
-                                <DataGridTextColumn Header="Final Score"
+                                <DataGridTextColumn Header="Підсумкова оцінка"
                                                   Binding="{Binding FinalScore}"
                                                   Width="*"/>
-                                <DataGridTextColumn Header="Status"
+                                <DataGridTextColumn Header="Статус"
                                                   Binding="{Binding Status}"
                                                   Width="*"/>
                             </DataGrid.Columns>
@@ -153,7 +153,7 @@
                                         <DataTrigger Binding="{Binding Subject.IsExamSoon}" Value="True">
                                             <Setter Property="Background" Value="#FFF3E0"/>
                                             <Setter Property="FontWeight" Value="Bold"/>
-                                            <Setter Property="ToolTip" Value="⚠️ Upcoming Екзамен! This Екзамен is scheduled within the next 10 days"/>
+                                            <Setter Property="ToolTip" Value="⚠️ Наближається екзамен! Цей екзамен запланований протягом наступних 10 днів"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                     <Style.Resources>
@@ -172,7 +172,7 @@
                                 x:Name="AlertsPanel"
                                 Visibility="Collapsed">
                             <StackPanel>
-                                <TextBlock Text="⚠️ Alerts"
+                                <TextBlock Text="⚠️ Сповіщення"
                                          FontWeight="Bold"
                                          Margin="0,0,0,10"/>
                                 <ItemsControl x:Name="AlertsList">

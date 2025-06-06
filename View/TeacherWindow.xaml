@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:oop_coursework.Views"
         xmlns:System="clr-namespace:System;assembly=mscorlib"
-        Title="Teacher Dashboard" Height="800" Width="1200"
+        Title="Панель викладача" Height="800" Width="1200"
         WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
@@ -62,7 +62,7 @@
                         </Grid.RowDefinitions>
 
                         <TabControl Grid.Row="0" Margin="0,0,0,10">
-                            <TabItem Header="Main Екзамен">
+                            <TabItem Header="Основний екзамен">
                                 <Grid Margin="10">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
@@ -73,7 +73,7 @@
 
                                     <!-- Semester Settings -->
                                     <StackPanel Grid.Column="0" Margin="0,0,40,0">
-                                        <TextBlock Text="Semester"
+                                        <TextBlock Text="Семестр"
                                                  FontWeight="SemiBold"
                                                  Margin="0,0,0,8"/>
                                         <ComboBox x:Name="SemesterComboBox"
@@ -85,7 +85,7 @@
 
                                     <!-- Екзамен Date Settings -->
                                     <StackPanel Grid.Column="1" Margin="0,0,40,0">
-                                        <TextBlock Text="Екзамен Date"
+                                        <TextBlock Text="Дата екзамену"
                                                  FontWeight="SemiBold"
                                                  Margin="0,0,0,8"/>
                                         <DatePicker x:Name="ExamDatePicker"
@@ -95,7 +95,7 @@
 
                                     <!-- Assessment Type Display -->
                                     <StackPanel Grid.Column="2" Margin="0,0,40,0">
-                                        <TextBlock Text="Assessment Type"
+                                        <TextBlock Text="Тип оцінювання"
                                                  FontWeight="SemiBold"
                                                  Margin="0,0,0,8"/>
                                         <TextBlock x:Name="AssessmentTypeText"
@@ -105,7 +105,7 @@
                                 </Grid>
                             </TabItem>
 
-                            <TabItem Header="Retake" x:Name="RetakeTab">
+                            <TabItem Header="Перездача" x:Name="RetakeTab">
                                 <Grid Margin="10">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
@@ -114,7 +114,7 @@
 
                                     <!-- Retake Date Settings -->
                                     <StackPanel Grid.Column="0" Margin="0,0,40,0">
-                                        <TextBlock Text="Retake Date"
+                                        <TextBlock Text="Дата перездачі"
                                                  FontWeight="SemiBold"
                                                  Margin="0,0,0,8"/>
                                         <DatePicker x:Name="RetakeDatePicker"
@@ -126,7 +126,7 @@
                         </TabControl>
 
                         <Button Grid.Row="1"
-                                Content="Update Settings"
+                                Content="Оновити налаштування"
                                 Click="UpdateSettings_Click"
                                 Style="{StaticResource PrimaryButton}"
                                 HorizontalAlignment="Right"
@@ -148,7 +148,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Text="Student Grades"
+                        <TextBlock Text="Оцінки студентів"
                                  FontWeight="SemiBold"
                                  FontSize="18"
                                  Margin="0,0,0,15"/>
@@ -159,21 +159,21 @@
                                   IsReadOnly="False"
                                   Margin="0,0,0,15">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Student Name"
+                                <DataGridTextColumn Header="Ім'я студента"
                                                   Binding="{Binding Student.FullName}"
                                                   IsReadOnly="True"
                                                   Width="200"/>
-                                <DataGridTextColumn Header="Main Екзамен Score"
+                                <DataGridTextColumn Header="Оцінка основного екзамену"
                                                   Binding="{Binding Grade.Score}"
                                                   Width="120"/>
-                                <DataGridTextColumn Header="Retake Score"
+                                <DataGridTextColumn Header="Оцінка перездачі"
                                                   Binding="{Binding Grade.RetakeScore}"
                                                   Width="120"/>
-                                <DataGridTextColumn Header="Final Score"
+                                <DataGridTextColumn Header="Підсумкова оцінка"
                                                   Binding="{Binding FinalScore}"
                                                   IsReadOnly="True"
                                                   Width="100"/>
-                                <DataGridTextColumn Header="Status"
+                                <DataGridTextColumn Header="Статус"
                                                   Binding="{Binding Grade.Status}"
                                                   IsReadOnly="True"
                                                   Width="120"/>
@@ -181,7 +181,7 @@
                         </DataGrid>
 
                         <Button Grid.Row="2"
-                                Content="Save Grades"
+                                Content="Зберегти оцінки"
                                 Click="SaveGrades_Click"
                                 Style="{StaticResource PrimaryButton}"
                                 HorizontalAlignment="Right"

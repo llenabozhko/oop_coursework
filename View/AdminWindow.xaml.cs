@@ -22,7 +22,7 @@ namespace oop_coursework.Views
             _dataService = dataService;
             _adminService = new AdminService(dataService);
 
-            WelcomeText.Text = $"Welcome, {_admin.FullName}!";
+            WelcomeText.Text = $"Вітаємо, {_admin.FullName}!";
             RoleFilter.SelectedIndex = 0;
             LoadUsers();
 
@@ -39,13 +39,19 @@ namespace oop_coursework.Views
             if (RoleFilter.SelectedItem is ComboBoxItem selectedItem)
             {
                 string? filter = selectedItem.Content?.ToString();
-                if (filter == "All Users")
+                if (filter == "Всі користувачі")
                 {
                     LoadUsers();
                 }
                 else if (filter != null)
                 {
-                    LoadUsers(filter.TrimEnd('s')); // Remove 's' from plural form
+                    LoadUsers(filter switch
+                    {
+                        "Студенти" => "Student",
+                        "Викладачі" => "Teacher",
+                        "Адміністратори" => "Administrator",
+                        _ => filter
+                    });
                 }
             }
         }
@@ -72,19 +78,19 @@ namespace oop_coursework.Views
 
                 if (!_adminService.CanDeleteUser(user, _admin))
                 {
-                    MessageBox.Show("Cannot delete this user.",
-                        "Delete Error",
+                    MessageBox.Show("Неможливо видалити цього користувача.",
+                        "Помилка видалення",
                         MessageBoxButton.OK,
                         MessageBoxImage.Error);
                     return;
                 }
 
                 var result = MessageBox.Show(
-                    $"Are you sure you want to delete {user.FullName}?\n\n" +
-                    "This will also delete:\n" +
-                    (user is Student ? "- All their grades\n" : "") +
-                    (user is Teacher ? "- Their subjects (if not taught by other teachers)\n- All grades for their subjects\n" : ""),
-                    "Confirm Delete",
+                    $"Ви впевнені, що хочете видалити користувача {user.FullName}?\n\n" +
+                    "Це також видалить:\n" +
+                    (user is Student ? "- Всі їхні оцінки\n" : "") +
+                    (user is Teacher ? "- Їхні предмети (якщо їх не викладають інші викладачі)\n- Всі оцінки з їхніх предметів\n" : ""),
+                    "Підтвердження видалення",
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Warning);
 
@@ -92,7 +98,7 @@ namespace oop_coursework.Views
                 {
                     _adminService.DeleteUser(userId);
                     LoadUsers();
-                    MessageBox.Show("User deleted successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Користувача успішно видалено.", "Успіх", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
         }

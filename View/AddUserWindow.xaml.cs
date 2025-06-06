@@ -25,7 +25,7 @@ namespace oop_coursework.Views
 
             if (_isEditMode)
             {
-                Title = "Edit User";
+                Title = "Редагувати користувача";
                 LoadExistingUserData();
                 RoleComboBox.IsEnabled = false;
             }
@@ -84,8 +84,8 @@ namespace oop_coursework.Views
             if (RoleComboBox.SelectedItem is ComboBoxItem selectedItem)
             {
                 string role = selectedItem.Content.ToString();
-                bool isStudent = role == "Student";
-                bool isTeacher = role == "Teacher";
+                bool isStudent = role == "Студент";
+                bool isTeacher = role == "Викладач";
 
                 SpecialtyLabel.Visibility = isStudent ? Visibility.Visible : Visibility.Collapsed;
                 SpecialtyTextBox.Visibility = isStudent ? Visibility.Visible : Visibility.Collapsed;
@@ -104,18 +104,18 @@ namespace oop_coursework.Views
                 !DateOfBirthPicker.SelectedDate.HasValue ||
                 RoleComboBox.SelectedItem is not ComboBoxItem selectedRoleItem)
             {
-                MessageBox.Show("Please fill in all required fields.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Будь ласка, заповніть всі обов'язкові поля.", "Помилка валідації", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            var role = selectedRoleItem.Content.ToString() ?? throw new InvalidOperationException("Role cannot be null");
+            var role = selectedRoleItem.Content.ToString() ?? throw new InvalidOperationException("Роль не може бути порожньою");
             User? user = _existingUser;
 
             if (!_isEditMode)
             {
                 user = role switch
                 {
-                    "Student" => new Student
+                    "Студент" => new Student
                     {
                         FirstName = FirstNameTextBox.Text,
                         LastName = LastNameTextBox.Text,
@@ -124,8 +124,8 @@ namespace oop_coursework.Views
                         Role = role,
                         Specialty = SpecialtyTextBox.Text
                     },
-                    "Teacher" => CreateTeacher(),
-                    "Administrator" => new Administrator
+                    "Викладач" => CreateTeacher(),
+                    "Адміністратор" => new Administrator
                     {
                         FirstName = FirstNameTextBox.Text,
                         LastName = LastNameTextBox.Text,
@@ -133,13 +133,13 @@ namespace oop_coursework.Views
                         Password = PasswordBox.Password,
                         Role = role
                     },
-                    _ => throw new InvalidOperationException("Invalid role selected")
+                    _ => throw new InvalidOperationException("Вибрано неправильну роль")
                 };
             }
 
             if (user == null)
             {
-                MessageBox.Show("Failed to create or update user.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Не вдалося створити або оновити користувача.", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -154,7 +154,7 @@ namespace oop_coursework.Views
             {
                 if (string.IsNullOrWhiteSpace(SpecialtyTextBox.Text))
                 {
-                    MessageBox.Show("Please enter the student's specialty.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Будь ласка, введіть спеціальність студента.", "Помилка валідації", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
                 student.Specialty = SpecialtyTextBox.Text;
@@ -163,14 +163,14 @@ namespace oop_coursework.Views
             {
                 if (SubjectComboBox.SelectedItem is not ComboBoxItem selectedSubjectItem)
                 {
-                    MessageBox.Show("Please select a subject.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Будь ласка, виберіть предмет.", "Помилка валідації", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
                 var subjectName = selectedSubjectItem.Content?.ToString();
                 if (string.IsNullOrEmpty(subjectName))
                 {
-                    MessageBox.Show("Invalid subject selected.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Вибрано неправильний предмет.", "Помилка валідації", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
@@ -179,7 +179,7 @@ namespace oop_coursework.Views
                     "Математика" => new MathSubject { Name = "Математика" },
                     "Англійська мова" => new EnglishSubject { Name = "Англійська мова" },
                     "Мистецтво" => new ArtSubject { Name = "Мистецтво" },
-                    _ => throw new InvalidOperationException("Invalid subject selected")
+                    _ => throw new InvalidOperationException("Вибрано неправильний предмет")
                 };
 
                 // Check if a subject with the same name already exists
@@ -212,21 +212,21 @@ namespace oop_coursework.Views
         {
             if (SubjectComboBox.SelectedItem is not ComboBoxItem selectedSubjectItem)
             {
-                throw new InvalidOperationException("Please select a subject.");
+                throw new InvalidOperationException("Будь ласка, виберіть предмет.");
             }
 
             var subjectName = selectedSubjectItem.Content?.ToString();
             if (string.IsNullOrEmpty(subjectName))
             {
-                throw new InvalidOperationException("Invalid subject selected.");
+                throw new InvalidOperationException("Вибрано неправильний предмет.");
             }
 
             Subject subject = subjectName switch
             {
                 "Математика" => new MathSubject { Name = "Математика" },
                 "Англійська мова" => new EnglishSubject { Name = "Англійська мова" },
-                "Мистецтво" => new ArtSubject { Name = "Art" },
-                _ => throw new InvalidOperationException("Invalid subject selected")
+                "Мистецтво" => new ArtSubject { Name = "Мистецтво" },
+                _ => throw new InvalidOperationException("Вибрано неправильний предмет")
             };
 
             var existingSubject = _dataService.GetSubjects().FirstOrDefault(s => s.Name == subjectName);
@@ -237,7 +237,7 @@ namespace oop_coursework.Views
                 LastName = LastNameTextBox.Text,
                 Username = UsernameTextBox.Text,
                 Password = PasswordBox.Password,
-                Role = "Teacher",
+                Role = "Викладач",
                 Subject = existingSubject ?? subject
             };
         }

@@ -4,7 +4,7 @@
     "StudentId": 2,
     "SubjectId": 1,
     "Score": 35,
-    "RetakeScore": null,
+    "RetakeScore": 60,
     "Subject": {
       "Id": 1,
       "Name": "\u041C\u0430\u0442\u0435\u043C\u0430\u0442\u0438\u043A\u0430",
@@ -15,9 +15,9 @@
     "Semester": 1,
     "GradeDate": "2025-06-06T21:46:08.1925276+03:00",
     "RetakeDate": null,
-    "FinalScore": 35,
-    "Status": "Retake Available",
-    "CanRetake": true,
-    "NeedsRetake": true
+    "FinalScore": 60,
+    "Status": "\u0417\u0434\u0430\u043D\u043E (\u041F\u0435\u0440\u0435\u0437\u0434\u0430\u0447\u0430)",
+    "CanRetake": false,
+    "NeedsRetake": false
   }
 ]
