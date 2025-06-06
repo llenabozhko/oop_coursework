@@ -55,7 +55,6 @@ namespace oop_coursework.Models
             get => _retakeDate;
             set
             {
-                
                 _retakeDate = value;
             }
         }
@@ -92,13 +91,22 @@ namespace oop_coursework.Models
 
         public bool IsExamSoon => ExamDate.HasValue &&
             (ExamDate.Value - DateTime.Now).TotalDays <= 10 &&
-            (ExamDate.Value - DateTime.Now).TotalDays >= 0;
+            (ExamDate.Value - DateTime.Now).TotalDays > 0;
 
-        public bool IsRetakeSoon => RetakeDate.HasValue &&
+        public bool IsExamPassed => ExamDate.HasValue && DateTime.Now > ExamDate.Value;
+
+        public bool NeedsRetake(double score) => score < 35 && IsExamPassed;
+
+        public bool IsRetakeAvailable(double score) =>
+            NeedsRetake(score) &&
+            RetakeDate.HasValue &&
+            DateTime.Now < RetakeDate.Value;
+
+        public bool IsRetakeSoon(double score) =>
+            IsRetakeAvailable(score) &&
+            RetakeDate.HasValue &&
             (RetakeDate.Value - DateTime.Now).TotalDays <= 10 &&
-            (RetakeDate.Value - DateTime.Now).TotalDays >= 0;
-
-        public bool CanSetRetakeDate => ExamDate.HasValue && DateTime.Now >= ExamDate.Value;
+            (RetakeDate.Value - DateTime.Now).TotalDays > 0;
 
         public Subject()
         {

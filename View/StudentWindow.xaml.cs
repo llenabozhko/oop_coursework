@@ -59,22 +59,33 @@ namespace oop_coursework.Views
                         Semester = semester
                     };
 
-                if (subject.IsExamSoon)
+                // Проверяем уведомления только если это экзамен
+                if (subject.IsExam)
                 {
-                    _alerts.Add($"Upcoming {subject.Name} exam on {subject.ExamDate:d}!");
-                }
-
-                if (grade.NeedsRetake)
-                {
-                    _alerts.Add($"Retake available for {subject.Name} on {subject.RetakeDate:d}");
-                }
-
-                // Notify if the student needs to retake the exam
-                if (grade.Score < 60 && !grade.RetakeScore.HasValue)
-                {
-                    var alertMessage = $"You need to retake the {subject.Name} exam.";
-                    _alerts.Add(alertMessage);
-                    Console.WriteLine(alertMessage); // Debug output
+                    // Если экзамен скоро и оценки еще нет
+                    if (subject.IsExamSoon && grade.Score == 0)
+                    {
+                        _alerts.Add($"Upcoming exam in {subject.Name} on {subject.ExamDate:d}!");
+                    }
+                    // Если нужна пересдача (оценка < 35)
+                    else if (subject.NeedsRetake(grade.Score))
+                    {
+                        if (subject.IsRetakeAvailable(grade.Score))
+                        {
+                            if (subject.IsRetakeSoon(grade.Score))
+                            {
+                                _alerts.Add($"URGENT: Retake exam in {subject.Name} on {subject.RetakeDate:d}! Your current score: {grade.Score}");
+                            }
+                            else
+                            {
+                                _alerts.Add($"You need to retake {subject.Name}. Retake scheduled for {subject.RetakeDate:d}. Your current score: {grade.Score}");
+                            }
+                        }
+                        else if (!subject.RetakeDate.HasValue)
+                        {
+                            _alerts.Add($"You need to retake {subject.Name}. Retake date not yet scheduled. Your current score: {grade.Score}");
+                        }
+                    }
                 }
 
                 gradeViewModels.Add(grade);
