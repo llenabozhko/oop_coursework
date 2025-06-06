@@ -7,5 +7,63 @@
     "Password": "admin",
     "Role": "Administrator",
     "DateOfBirth": "0001-01-01T00:00:00"
+  },
+  {
+    "Id": 2,
+    "FirstName": "ww",
+    "LastName": "ww",
+    "Username": "ww",
+    "Password": "ww",
+    "Role": "Teacher",
+    "DateOfBirth": "2001-01-11T00:00:00",
+    "Subject": {
+      "Id": 1,
+      "Name": "Mathematics",
+      "ExamDate": "2025-06-10T00:00:00.0000000",
+      "Credits": 5,
+      "IsExam": true
+    }
+  },
+  {
+    "Id": 3,
+    "FirstName": "ee",
+    "LastName": "ee",
+    "Username": "ee",
+    "Password": "ee",
+    "Role": "Teacher",
+    "DateOfBirth": "2011-01-01T00:00:00",
+    "Subject": {
+      "Id": 2,
+      "Name": "English",
+      "ExamDate": "",
+      "Credits": 4,
+      "IsExam": true
+    }
+  },
+  {
+    "Id": 4,
+    "FirstName": "rr",
+    "LastName": "rr",
+    "Username": "rr",
+    "Password": "rr",
+    "Role": "Teacher",
+    "DateOfBirth": "2001-01-11T00:00:00",
+    "Subject": {
+      "Id": 3,
+      "Name": "Art",
+      "ExamDate": "",
+      "Credits": 3,
+      "IsExam": false
+    }
+  },
+  {
+    "Id": 5,
+    "FirstName": "aa",
+    "LastName": "aa",
+    "Username": "aa",
+    "Password": "aa",
+    "Role": "Student",
+    "DateOfBirth": "2011-01-01T00:00:00",
+    "Specialty": "121"
   }
 ]

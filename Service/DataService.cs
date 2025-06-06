@@ -148,18 +148,15 @@ namespace oop_coursework.Services
             using var jsonDoc = JsonDocument.ParseValue(ref reader);
             var jsonObject = jsonDoc.RootElement;
 
-            var role = jsonObject.GetProperty("Role").GetString() ?? throw new JsonException("Role is required");
-            var firstName = jsonObject.GetProperty("FirstName").GetString() ?? string.Empty;
-            var lastName = jsonObject.GetProperty("LastName").GetString() ?? string.Empty;
             var username = jsonObject.GetProperty("Username").GetString() ?? string.Empty;
             var password = jsonObject.GetProperty("Password").GetString() ?? string.Empty;
 
-            User user = role switch
+            User user = jsonObject.GetProperty("Role").GetString() switch
             {
                 "Student" => new Student
                 {
-                    FirstName = firstName,
-                    LastName = lastName,
+                    FirstName = jsonObject.GetProperty("FirstName").GetString() ?? string.Empty,
+                    LastName = jsonObject.GetProperty("LastName").GetString() ?? string.Empty,
                     Username = username,
                     Password = password,
                     Role = "Student",
@@ -167,8 +164,8 @@ namespace oop_coursework.Services
                 },
                 "Teacher" => new Teacher
                 {
-                    FirstName = firstName,
-                    LastName = lastName,
+                    FirstName = jsonObject.GetProperty("FirstName").GetString() ?? string.Empty,
+                    LastName = jsonObject.GetProperty("LastName").GetString() ?? string.Empty,
                     Username = username,
                     Password = password,
                     Role = "Teacher",
@@ -176,20 +173,20 @@ namespace oop_coursework.Services
                 },
                 "Administrator" => new Administrator
                 {
-                    FirstName = firstName,
-                    LastName = lastName,
+                    FirstName = jsonObject.GetProperty("FirstName").GetString() ?? string.Empty,
+                    LastName = jsonObject.GetProperty("LastName").GetString() ?? string.Empty,
                     Username = username,
                     Password = password,
                     Role = "Administrator"
                 },
-                _ => throw new JsonException($"Unknown user role: {role}")
+                _ => throw new JsonException($"Unknown user role: {jsonObject.GetProperty("Role").GetString()}")
             };
 
             if (jsonObject.TryGetProperty("Id", out var idElement))
                 user.Id = idElement.GetInt32();
 
-            if (jsonObject.TryGetProperty("DateOfBirth", out var dateElement))
-                user.DateOfBirth = dateElement.GetDateTime();
+            if (jsonObject.TryGetProperty("DateOfBirth", out var dateElement) && DateTime.TryParse(dateElement.GetString(), out var parsedDate))
+                user.DateOfBirth = parsedDate;
 
             if (user is Teacher teacher && jsonObject.TryGetProperty("Subject", out var subjectElement))
             {
@@ -202,7 +199,8 @@ namespace oop_coursework.Services
                     _ => throw new JsonException($"Unknown subject: {subjectName}")
                 });
                 subject.Id = subjectElement.GetProperty("Id").GetInt32();
-                subject.ExamDate = subjectElement.GetProperty("ExamDate").GetDateTime();
+                if (jsonObject.TryGetProperty("ExamDate", out var examDateElement) && DateTime.TryParse(examDateElement.GetString(), out var parsedExamDate))
+                    subject.ExamDate = parsedExamDate;
                 subject.RetakeDate = subjectElement.TryGetProperty("RetakeDate", out var retakeDateElement) ?
                     retakeDateElement.GetDateTime() : null;
                 subject.Credits = subjectElement.GetProperty("Credits").GetInt32();
@@ -234,7 +232,7 @@ namespace oop_coursework.Services
                 writer.WriteStartObject("Subject");
                 writer.WriteNumber("Id", teacher.Subject.Id);
                 writer.WriteString("Name", teacher.Subject.Name);
-                writer.WriteString("ExamDate", teacher.Subject.ExamDate);
+                writer.WriteString("ExamDate", teacher.Subject.ExamDate?.ToString("o") ?? "");
                 if (teacher.Subject.RetakeDate.HasValue)
                 {
                     writer.WriteString("RetakeDate", teacher.Subject.RetakeDate.Value);
@@ -266,8 +264,8 @@ namespace oop_coursework.Services
             if (jsonObject.TryGetProperty("Id", out var idElement))
                 subject.Id = idElement.GetInt32();
 
-            if (jsonObject.TryGetProperty("ExamDate", out var examDateElement))
-                subject.ExamDate = examDateElement.GetDateTime();
+            if (jsonObject.TryGetProperty("ExamDate", out var examDateElement) && DateTime.TryParse(examDateElement.GetString(), out var parsedExamDate))
+                subject.ExamDate = parsedExamDate;
 
             if (jsonObject.TryGetProperty("Credits", out var creditsElement))
                 subject.Credits = creditsElement.GetInt32();
@@ -292,7 +290,7 @@ namespace oop_coursework.Services
 
             writer.WriteNumber("Id", subject.Id);
             writer.WriteString("Name", subject.Name);
-            writer.WriteString("ExamDate", subject.ExamDate);
+            writer.WriteString("ExamDate", subject.ExamDate?.ToString("o") ?? "");
             writer.WriteNumber("Credits", subject.Credits);
             writer.WriteBoolean("IsExam", subject.IsExam);
 

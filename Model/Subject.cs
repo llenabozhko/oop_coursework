@@ -6,20 +6,20 @@ namespace oop_coursework.Models
     {
         public int Id { get; set; }
         public required virtual string Name { get; set; }
-        public DateTime ExamDate { get; set; }
+        public DateTime? ExamDate { get; set; }
         public DateTime? RetakeDate { get; set; }
         public int Credits { get; set; }
         public bool IsExam { get; set; }
         public int Semester { get; set; }
 
-        public bool IsExamSoon => (ExamDate - DateTime.Now).TotalDays <= 10 && (ExamDate - DateTime.Now).TotalDays >= 0;
+        public bool IsExamSoon => ExamDate.HasValue && (ExamDate.Value - DateTime.Now).TotalDays <= 10 && (ExamDate.Value - DateTime.Now).TotalDays >= 0;
         public bool IsRetakeSoon => RetakeDate.HasValue && (RetakeDate.Value - DateTime.Now).TotalDays <= 10 && (RetakeDate.Value - DateTime.Now).TotalDays >= 0;
 
-        public bool CanSetRetakeDate => DateTime.Now >= ExamDate;
+        public bool CanSetRetakeDate => ExamDate.HasValue && DateTime.Now >= ExamDate.Value;
 
         public Subject()
         {
-            ExamDate = DateTime.Now.AddMonths(1);
+            ExamDate = null;
             RetakeDate = null;
             Semester = (DateTime.Now.Month > 6) ? 1 : 2;
         }

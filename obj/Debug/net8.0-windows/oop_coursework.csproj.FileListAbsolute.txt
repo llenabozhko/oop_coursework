@@ -1,8 +1,3 @@
-D:\Desktop\my star\oop_coursework\bin\Debug\net8.0-windows\oop_coursework.exe
-D:\Desktop\my star\oop_coursework\bin\Debug\net8.0-windows\oop_coursework.deps.json
-D:\Desktop\my star\oop_coursework\bin\Debug\net8.0-windows\oop_coursework.runtimeconfig.json
-D:\Desktop\my star\oop_coursework\bin\Debug\net8.0-windows\oop_coursework.dll
-D:\Desktop\my star\oop_coursework\bin\Debug\net8.0-windows\oop_coursework.pdb
 D:\Desktop\my star\oop_coursework\obj\Debug\net8.0-windows\View\AddUserWindow.baml
 D:\Desktop\my star\oop_coursework\obj\Debug\net8.0-windows\View\LoginWindow.baml
 D:\Desktop\my star\oop_coursework\obj\Debug\net8.0-windows\View\AddUserWindow.g.cs
@@ -14,6 +9,11 @@ D:\Desktop\my star\oop_coursework\obj\Debug\net8.0-windows\App.g.cs
 D:\Desktop\my star\oop_coursework\obj\Debug\net8.0-windows\GeneratedInternalTypeHelper.g.cs
 D:\Desktop\my star\oop_coursework\obj\Debug\net8.0-windows\oop_coursework_MarkupCompile.cache
 D:\Desktop\my star\oop_coursework\obj\Debug\net8.0-windows\oop_coursework_MarkupCompile.lref
+D:\Desktop\my star\oop_coursework\bin\Debug\net8.0-windows\oop_coursework.exe
+D:\Desktop\my star\oop_coursework\bin\Debug\net8.0-windows\oop_coursework.deps.json
+D:\Desktop\my star\oop_coursework\bin\Debug\net8.0-windows\oop_coursework.runtimeconfig.json
+D:\Desktop\my star\oop_coursework\bin\Debug\net8.0-windows\oop_coursework.dll
+D:\Desktop\my star\oop_coursework\bin\Debug\net8.0-windows\oop_coursework.pdb
 D:\Desktop\my star\oop_coursework\obj\Debug\net8.0-windows\App.baml
 D:\Desktop\my star\oop_coursework\obj\Debug\net8.0-windows\View\AdminWindow.baml
 D:\Desktop\my star\oop_coursework\obj\Debug\net8.0-windows\View\StudentWindow.baml

@@ -125,7 +125,7 @@ namespace oop_coursework.Views {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/oop_coursework;V1.0.0.0;component/view/teacherwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/oop_coursework;component/view/teacherwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\View\TeacherWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
