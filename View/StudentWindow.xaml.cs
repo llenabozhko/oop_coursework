@@ -69,6 +69,22 @@ namespace oop_coursework.Views
                     _alerts.Add($"Retake available for {subject.Name} on {subject.RetakeDate:d}");
                 }
 
+                // Notify if the student needs to retake the exam
+                if (grade.Score < 60 && !grade.RetakeScore.HasValue)
+                {
+                    var alertMessage = $"You need to retake the {subject.Name} exam.";
+                    _alerts.Add(alertMessage);
+                    Console.WriteLine(alertMessage); // Debug output
+                }
+
+                // Hardcoded alert if the exam date is not null
+                if (subject.ExamDate.HasValue)
+                {
+                    var examAlert = $"Exam for {subject.Name} is scheduled on {subject.ExamDate:d}.";
+                    _alerts.Add(examAlert);
+                    Console.WriteLine(examAlert); // Debug output
+                }
+
                 gradeViewModels.Add(grade);
             }
 

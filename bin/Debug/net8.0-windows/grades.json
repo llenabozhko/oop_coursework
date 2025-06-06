@@ -19,5 +19,47 @@
     "Status": "Passed (Retake)",
     "CanRetake": false,
     "NeedsRetake": false
+  },
+  {
+    "Id": 2,
+    "StudentId": 5,
+    "SubjectId": 3,
+    "Score": 35,
+    "RetakeScore": null,
+    "Subject": {
+      "Id": 3,
+      "Name": "Art",
+      "ExamDate": "2025-06-06T00:00:00.0000000\u002B03:00",
+      "Credits": 3,
+      "IsExam": false
+    },
+    "Semester": 1,
+    "GradeDate": "2025-06-06T19:56:23.5589915+03:00",
+    "RetakeDate": null,
+    "FinalScore": 35,
+    "Status": "Failed",
+    "CanRetake": true,
+    "NeedsRetake": false
+  },
+  {
+    "Id": 3,
+    "StudentId": 5,
+    "SubjectId": 2,
+    "Score": 60,
+    "RetakeScore": null,
+    "Subject": {
+      "Id": 2,
+      "Name": "English",
+      "ExamDate": "2025-06-06T19:56:23.5589915+03:00",
+      "Credits": 4,
+      "IsExam": true
+    },
+    "Semester": 1,
+    "GradeDate": "2025-06-06T19:59:58.2469745+03:00",
+    "RetakeDate": null,
+    "FinalScore": 60,
+    "Status": "Passed",
+    "CanRetake": false,
+    "NeedsRetake": false
   }
 ]

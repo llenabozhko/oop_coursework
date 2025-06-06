@@ -2,14 +2,14 @@
   {
     "Id": 1,
     "Name": "Mathematics",
-    "ExamDate": "2025-06-07T00:00:00.0000000",
+    "ExamDate": "",
     "Credits": 5,
     "IsExam": true
   },
   {
     "Id": 2,
     "Name": "English",
-    "ExamDate": "",
+    "ExamDate": "2025-06-06T00:00:00.0000000\u002B03:00",
     "Credits": 4,
     "IsExam": true
   },
