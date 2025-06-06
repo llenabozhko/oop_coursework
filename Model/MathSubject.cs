@@ -6,8 +6,7 @@ namespace oop_coursework.Models
 
         public MathSubject()
         {
-            IsExam = true;  // Mathematics is always an exam
-            Credits = 5;    // Default credits for Math
+            Credits = 10;
         }
     }
 }

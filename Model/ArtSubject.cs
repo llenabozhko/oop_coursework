@@ -6,8 +6,7 @@ namespace oop_coursework.Models
 
         public ArtSubject()
         {
-            IsExam = false;
-            Credits = 3;
+            Credits = 10;
         }
     }
 }

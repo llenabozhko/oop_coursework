@@ -6,8 +6,7 @@ namespace oop_coursework.Models
 
         public EnglishSubject()
         {
-            IsExam = true;  // English is always an exam
-            Credits = 4;    // Default credits for English
+            Credits = 10;
         }
     }
 }

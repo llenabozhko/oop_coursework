@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="oop_coursework.Models.Administrator">
+    <Position X="6" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Administrator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="oop_coursework.Models.ArtSubject" Collapsed="true">
+    <Position X="8.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\ArtSubject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="oop_coursework.Models.EnglishSubject" Collapsed="true">
+    <Position X="10.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\EnglishSubject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="oop_coursework.Models.Grade" Collapsed="true">
+    <Position X="15.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAMEAAAAAgCIIAAAAAAAgAgAAAAAAAAAQACAAA=</HashCode>
+      <FileName>Model\Grade.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="oop_coursework.Models.MathSubject" Collapsed="true">
+    <Position X="12.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\MathSubject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="oop_coursework.Models.Student" Collapsed="true">
+    <Position X="8.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Model\Student.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="oop_coursework.Models.Subject" Collapsed="true">
+    <Position X="10.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>oAACAAAAAAAAACgAIAAAAIQAAIAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>Model\Subject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="oop_coursework.Models.Teacher">
+    <Position X="10.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Teacher.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="oop_coursework.Models.User">
+    <Position X="8.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAAAAAAIAAEQAAAAAAAAAQAAACAAAAAAAAAAg=</HashCode>
+      <FileName>Model\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="oop_coursework.Services.DataService" Collapsed="true">
+    <Position X="18.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>xAAgAAAAAAAQACAEhACAAAgAACAAAIEgAIBEBAAAEAQ=</HashCode>
+      <FileName>Service\DataService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="oop_coursework.Services.UserJsonConverter" Collapsed="true">
+    <Position X="15.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Service\DataService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="oop_coursework.Services.SubjectJsonConverter" Collapsed="true">
+    <Position X="18.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAEAgAA=</HashCode>
+      <FileName>Service\DataService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="oop_coursework.Views.AddUserWindow" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABDAAAAABiAAAAABAAIAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\AddUserWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="oop_coursework.Views.AdminWindow">
+    <Position X="21" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAACAAAAAAAAAIAAAABAAAAAAAAAAYAAAABAAA=</HashCode>
+      <FileName>View\AdminWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="oop_coursework.Views.BaseWindow">
+    <Position X="18.75" Y="4.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="oop_coursework.Views.BaseWindow.RelayCommand" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>View\BaseWindow.cs</NewMemberFileName>
+        </TypeIdentifier>
+        <Lollipop Position="0.2" />
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAQAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\BaseWindow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="oop_coursework.Views.LoginWindow" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAACAAAAAAAA=</HashCode>
+      <FileName>View\LoginWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="oop_coursework.Views.StudentWindow">
+    <Position X="16.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAABAAAAIAAAAAAAQAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>View\StudentWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="oop_coursework.Views.TeacherWindow">
+    <Position X="18.75" Y="7.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="oop_coursework.Views.TeacherWindow.StudentGradeViewModel" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>View\TeacherWindow.xaml.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>BAAAACAAAAAgAAAAAkIAAAAAAAQAAIABAAAAABAAAAI=</HashCode>
+      <FileName>View\TeacherWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="oop_coursework.App" Collapsed="true">
+    <Position X="17" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
