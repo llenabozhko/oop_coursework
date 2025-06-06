@@ -1,1 +1,44 @@
-[]
+[
+  {
+    "Id": 1,
+    "StudentId": 2,
+    "SubjectId": 1,
+    "Score": 60,
+    "RetakeScore": null,
+    "Subject": {
+      "Id": 1,
+      "Name": "Mathematics",
+      "ExamDate": "2025-07-06T16:15:08.0703056+03:00",
+      "Credits": 5,
+      "IsExam": true
+    },
+    "Semester": 1,
+    "GradeDate": "2025-06-06T16:15:35.9131659+03:00",
+    "RetakeDate": null,
+    "FinalScore": 60,
+    "Status": "Passed",
+    "CanRetake": false,
+    "NeedsRetake": false
+  },
+  {
+    "Id": 2,
+    "StudentId": 2,
+    "SubjectId": 3,
+    "Score": 35,
+    "RetakeScore": null,
+    "Subject": {
+      "Id": 3,
+      "Name": "Art",
+      "ExamDate": "2025-07-11T00:00:00",
+      "Credits": 3,
+      "IsExam": false
+    },
+    "Semester": 1,
+    "GradeDate": "2025-06-06T16:16:34.0964091+03:00",
+    "RetakeDate": null,
+    "FinalScore": 35,
+    "Status": "Failed",
+    "CanRetake": true,
+    "NeedsRetake": false
+  }
+]

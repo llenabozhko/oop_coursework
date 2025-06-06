@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "Id": 1,
+    "Name": "Mathematics",
+    "ExamDate": "2025-06-19T00:00:00",
+    "Credits": 5,
+    "IsExam": true
+  },
+  {
+    "Id": 2,
+    "Name": "English",
+    "ExamDate": "2025-06-09T00:00:00",
+    "Credits": 4,
+    "IsExam": true
+  },
+  {
+    "Id": 3,
+    "Name": "Art",
+    "ExamDate": "2025-07-11T00:00:00",
+    "Credits": 3,
+    "IsExam": false
+  }
+]

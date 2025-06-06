@@ -4,6 +4,6 @@ namespace oop_coursework.Models
 {
     public class Teacher : User
     {
-        public Subject Subject { get; set; }
+        public required Subject Subject { get; set; }
     }
 }

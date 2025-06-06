@@ -12,11 +12,16 @@ namespace oop_coursework.Views
     {
         private readonly Teacher _teacher;
         private readonly DataService _dataService;
+        private Subject _currentSubject;
+        private int _currentSemester = 1;
 
         public class StudentGradeViewModel
         {
-            public Student Student { get; set; }
-            public Grade Grade { get; set; }
+            public required Student Student { get; set; }
+            public required Grade Grade { get; set; }
+            public string MainExamScore => Grade.Score > 0 ? Grade.Score.ToString("F1") : "-";
+            public string RetakeScore => Grade.RetakeScore.HasValue ? Grade.RetakeScore.Value.ToString("F1") : "-";
+            public string FinalScore => Grade.FinalScore.ToString("F1");
         }
 
         public TeacherWindow(Teacher teacher, DataService dataService)
@@ -27,47 +32,49 @@ namespace oop_coursework.Views
             _teacher = teacher;
             _dataService = dataService;
 
-            // Initialize subject if it doesn't exist
-            if (_teacher.Subject == null)
-            {
-                var existingSubject = _dataService.GetSubjects()
-                    .FirstOrDefault(s => s.Name == "Mathematics"); // Default to Math if no subject assigned
+            // Hide subject selection as teacher has only one subject
+            SubjectSelectionPanel.Visibility = Visibility.Collapsed;
 
-                if (existingSubject != null)
-                {
-                    _teacher.Subject = existingSubject;
-                }
-                else
-                {
-                    _teacher.Subject = new MathSubject
-                    {
-                        ExamDate = DateTime.Now.AddMonths(1),
-                        Credits = 5,
-                        IsExam = true
-                    };
-                    _dataService.AddSubject(_teacher.Subject);
-                }
-                _dataService.SaveChanges();
+            _currentSubject = _teacher.Subject;
+            if (_currentSubject == null)
+            {
+                MessageBox.Show("No subject assigned to teacher.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Close();
+                return;
             }
 
             WelcomeText.Text = $"Welcome, {_teacher.FullName}!";
-            SubjectNameText.Text = _teacher.Subject.Name;
+            SubjectNameText.Text = $"Subject: {_currentSubject.Name}";
+
+            // Setup semester selection
+            SemesterComboBox.SelectedIndex = 0;
+            SemesterComboBox.SelectionChanged += SemesterComboBox_SelectionChanged;
 
             LoadSubjectSettings();
             LoadStudentGrades();
         }
 
+        private void SemesterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (SemesterComboBox.SelectedItem is ComboBoxItem selectedItem)
+            {
+                _currentSemester = int.Parse(selectedItem.Content.ToString() ?? "1");
+                LoadStudentGrades();
+            }
+        }
+
         private void LoadSubjectSettings()
         {
-            ExamDatePicker.SelectedDate = _teacher.Subject.ExamDate;
-            AssessmentTypeComboBox.SelectedIndex = _teacher.Subject.IsExam ? 0 : 1;
+            ExamDatePicker.SelectedDate = _currentSubject.ExamDate;
+            RetakeDatePicker.SelectedDate = _currentSubject.RetakeDate;
+            AssessmentTypeText.Text = _currentSubject.IsExam ? "Exam" : "Test";
         }
 
         private void LoadStudentGrades()
         {
             var students = _dataService.GetStudents();
             var grades = _dataService.GetGrades()
-                .Where(g => g.SubjectId == _teacher.Subject.Id)
+                .Where(g => g.SubjectId == _currentSubject.Id && g.Semester == _currentSemester)
                 .ToList();
 
             var studentGrades = new List<StudentGradeViewModel>();
@@ -75,8 +82,14 @@ namespace oop_coursework.Views
             foreach (var student in students)
             {
                 var grade = grades.FirstOrDefault(g => g.StudentId == student.Id) ??
-                    new Grade { StudentId = student.Id, SubjectId = _teacher.Subject.Id, Score = 0 };
-                grade.Subject = _teacher.Subject;
+                    new Grade
+                    {
+                        StudentId = student.Id,
+                        SubjectId = _currentSubject.Id,
+                        Score = 0,
+                        Subject = _currentSubject,
+                        Semester = _currentSemester
+                    };
 
                 studentGrades.Add(new StudentGradeViewModel
                 {
@@ -96,9 +109,20 @@ namespace oop_coursework.Views
                 return;
             }
 
-            _teacher.Subject.ExamDate = ExamDatePicker.SelectedDate.Value;
-            _teacher.Subject.IsExam = AssessmentTypeComboBox.SelectedIndex == 0;
+            _currentSubject.ExamDate = ExamDatePicker.SelectedDate.Value;
+
+            if (RetakeDatePicker.SelectedDate.HasValue)
+            {
+                if (RetakeDatePicker.SelectedDate.Value <= _currentSubject.ExamDate)
+                {
+                    MessageBox.Show("Retake date must be after the main exam date.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                _currentSubject.RetakeDate = RetakeDatePicker.SelectedDate.Value;
+            }
+
             _dataService.SaveChanges();
+            LoadSubjectSettings();
 
             MessageBox.Show("Settings updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
         }
@@ -116,6 +140,12 @@ namespace oop_coursework.Views
                         return;
                     }
 
+                    // Enable retake tab if grade is below 60
+                    if (vm.Grade.Score < 60)
+                    {
+                        RetakeTab.IsEnabled = true;
+                    }
+
                     if (vm.Grade.Id == 0)
                     {
                         _dataService.AddGrade(vm.Grade);
@@ -123,6 +153,7 @@ namespace oop_coursework.Views
                 }
 
                 _dataService.SaveChanges();
+                LoadStudentGrades();
                 MessageBox.Show("Grades saved successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }

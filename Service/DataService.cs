@@ -14,9 +14,9 @@ namespace oop_coursework.Services
         private readonly string _subjectsPath = "subjects.json";
         private readonly string _gradesPath = "grades.json";
 
-        private List<User> _users;
-        private List<Subject> _subjects;
-        private List<Grade> _grades;
+        private List<User> _users = new();
+        private List<Subject> _subjects = new();
+        private List<Grade> _grades = new();
 
         private readonly JsonSerializerOptions _jsonOptions;
 
@@ -49,7 +49,7 @@ namespace oop_coursework.Services
                 return new T();
 
             var json = File.ReadAllText(path);
-            return JsonSerializer.Deserialize<T>(json, _jsonOptions);
+            return JsonSerializer.Deserialize<T>(json, _jsonOptions) ?? new T();
         }
 
         private void SaveToJson<T>(T data, string path)
@@ -60,15 +60,18 @@ namespace oop_coursework.Services
 
         public void SaveChanges()
         {
-            // Update subjects from teachers
-            var teachers = _users.OfType<Teacher>().Where(t => t.Subject != null);
+            var teachers = _users.OfType<Teacher>();
             foreach (var teacher in teachers)
             {
-                var subject = _subjects.FirstOrDefault(s => s.Id == teacher.Subject.Id);
-                if (subject != null)
+                if (teacher.Subject != null)
                 {
-                    subject.ExamDate = teacher.Subject.ExamDate;
-                    subject.IsExam = teacher.Subject.IsExam;
+                    var subject = _subjects.FirstOrDefault(s => s.Id == teacher.Subject.Id);
+                    if (subject != null)
+                    {
+                        subject.ExamDate = teacher.Subject.ExamDate;
+                        subject.RetakeDate = teacher.Subject.RetakeDate;
+                        subject.IsExam = teacher.Subject.IsExam;
+                    }
                 }
             }
 
@@ -80,8 +83,8 @@ namespace oop_coursework.Services
         public List<Student> GetStudents() => _users.OfType<Student>().ToList();
         public List<Teacher> GetTeachers() => _users.OfType<Teacher>().ToList();
         public List<Administrator> GetAdministrators() => _users.OfType<Administrator>().ToList();
-        public List<Subject> GetSubjects() => _subjects;
-        public List<Grade> GetGrades() => _grades;
+        public List<Subject> GetSubjects() => _subjects.ToList();
+        public List<Grade> GetGrades() => _grades.ToList();
 
         public void AddUser(User user)
         {
@@ -104,7 +107,30 @@ namespace oop_coursework.Services
             SaveChanges();
         }
 
-        public User GetUserByCredentials(string username, string password)
+        public void DeleteUser(int userId)
+        {
+            var user = _users.FirstOrDefault(u => u.Id == userId);
+            if (user == null) return;
+
+            if (user is Student)
+            {
+                _grades.RemoveAll(g => g.StudentId == userId);
+            }
+
+            if (user is Teacher teacher)
+            {
+                if (teacher.Subject != null)
+                {
+                    _subjects.RemoveAll(s => s.Id == teacher.Subject.Id);
+                    _grades.RemoveAll(g => g.SubjectId == teacher.Subject.Id);
+                }
+            }
+
+            _users.Remove(user);
+            SaveChanges();
+        }
+
+        public User? GetUserByCredentials(string username, string password)
         {
             return _users.FirstOrDefault(u => u.Username == username && u.Password == password);
         }
@@ -122,52 +148,66 @@ namespace oop_coursework.Services
             using var jsonDoc = JsonDocument.ParseValue(ref reader);
             var jsonObject = jsonDoc.RootElement;
 
-            var role = jsonObject.GetProperty("Role").GetString();
+            var role = jsonObject.GetProperty("Role").GetString() ?? throw new JsonException("Role is required");
+            var firstName = jsonObject.GetProperty("FirstName").GetString() ?? string.Empty;
+            var lastName = jsonObject.GetProperty("LastName").GetString() ?? string.Empty;
+            var username = jsonObject.GetProperty("Username").GetString() ?? string.Empty;
+            var password = jsonObject.GetProperty("Password").GetString() ?? string.Empty;
+
             User user = role switch
             {
-                "Student" => new Student(),
-                "Teacher" => new Teacher(),
-                "Administrator" => new Administrator(),
+                "Student" or "Студент" => new Student
+                {
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Username = username,
+                    Password = password,
+                    Role = "Студент",
+                    Specialty = jsonObject.GetProperty("Specialty").GetString() ?? string.Empty
+                },
+                "Teacher" or "Викладач" => new Teacher
+                {
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Username = username,
+                    Password = password,
+                    Role = "Викладач",
+                    Subject = new MathSubject { Name = "Математика" }
+                },
+                "Administrator" or "Адміністратор" => new Administrator
+                {
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Username = username,
+                    Password = password,
+                    Role = "Адміністратор"
+                },
                 _ => throw new JsonException($"Unknown user role: {role}")
             };
 
             if (jsonObject.TryGetProperty("Id", out var idElement))
                 user.Id = idElement.GetInt32();
 
-            if (jsonObject.TryGetProperty("FirstName", out var firstNameElement))
-                user.FirstName = firstNameElement.GetString();
-
-            if (jsonObject.TryGetProperty("LastName", out var lastNameElement))
-                user.LastName = lastNameElement.GetString();
-
-            if (jsonObject.TryGetProperty("Username", out var usernameElement))
-                user.Username = usernameElement.GetString();
-
-            if (jsonObject.TryGetProperty("Password", out var passwordElement))
-                user.Password = passwordElement.GetString();
-
             if (jsonObject.TryGetProperty("DateOfBirth", out var dateElement))
                 user.DateOfBirth = dateElement.GetDateTime();
-
-            user.Role = role;
-
-            if (user is Student student && jsonObject.TryGetProperty("Specialty", out var specialtyElement))
-                student.Specialty = specialtyElement.GetString();
 
             if (user is Teacher teacher && jsonObject.TryGetProperty("Subject", out var subjectElement))
             {
                 var subjectName = subjectElement.GetProperty("Name").GetString();
-                teacher.Subject = subjectName switch
+                Subject subject = (Subject)(subjectName switch
                 {
-                    "Mathematics" => new MathSubject(),
-                    "English" => new EnglishSubject(),
-                    "Art" => new ArtSubject(),
+                    "Mathematics" => new MathSubject { Name = "Mathematics" },
+                    "English" => new EnglishSubject { Name = "English" },
+                    "Art" => new ArtSubject { Name = "Art" },
                     _ => throw new JsonException($"Unknown subject: {subjectName}")
-                };
-                teacher.Subject.Id = subjectElement.GetProperty("Id").GetInt32();
-                teacher.Subject.ExamDate = subjectElement.GetProperty("ExamDate").GetDateTime();
-                teacher.Subject.Credits = subjectElement.GetProperty("Credits").GetInt32();
-                teacher.Subject.IsExam = subjectElement.GetProperty("IsExam").GetBoolean();
+                });
+                subject.Id = subjectElement.GetProperty("Id").GetInt32();
+                subject.ExamDate = subjectElement.GetProperty("ExamDate").GetDateTime();
+                subject.RetakeDate = subjectElement.TryGetProperty("RetakeDate", out var retakeDateElement) ?
+                    retakeDateElement.GetDateTime() : null;
+                subject.Credits = subjectElement.GetProperty("Credits").GetInt32();
+                subject.IsExam = subjectElement.GetProperty("IsExam").GetBoolean();
+                teacher.Subject = subject;
             }
 
             return user;
@@ -195,6 +235,10 @@ namespace oop_coursework.Services
                 writer.WriteNumber("Id", teacher.Subject.Id);
                 writer.WriteString("Name", teacher.Subject.Name);
                 writer.WriteString("ExamDate", teacher.Subject.ExamDate);
+                if (teacher.Subject.RetakeDate.HasValue)
+                {
+                    writer.WriteString("RetakeDate", teacher.Subject.RetakeDate.Value);
+                }
                 writer.WriteNumber("Credits", teacher.Subject.Credits);
                 writer.WriteBoolean("IsExam", teacher.Subject.IsExam);
                 writer.WriteEndObject();
@@ -216,14 +260,8 @@ namespace oop_coursework.Services
             using var jsonDoc = JsonDocument.ParseValue(ref reader);
             var jsonObject = jsonDoc.RootElement;
 
-            var name = jsonObject.GetProperty("Name").GetString();
-            Subject subject = name switch
-            {
-                "Mathematics" => new MathSubject(),
-                "English" => new EnglishSubject(),
-                "Art" => new ArtSubject(),
-                _ => throw new JsonException($"Unknown subject: {name}")
-            };
+            var name = jsonObject.GetProperty("Name").GetString() ?? throw new JsonException("Subject name is required");
+            Subject subject = CreateSubject(name);
 
             if (jsonObject.TryGetProperty("Id", out var idElement))
                 subject.Id = idElement.GetInt32();
@@ -239,6 +277,14 @@ namespace oop_coursework.Services
 
             return subject;
         }
+
+        private static Subject CreateSubject(string name) => name switch
+        {
+            "Mathematics" => new MathSubject { Name = "Mathematics" },
+            "English" => new EnglishSubject { Name = "English" },
+            "Art" => new ArtSubject { Name = "Art" },
+            _ => throw new JsonException($"Unknown subject: {name}")
+        };
 
         public override void Write(Utf8JsonWriter writer, Subject subject, JsonSerializerOptions options)
         {

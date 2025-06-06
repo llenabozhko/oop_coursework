@@ -4,16 +4,17 @@ using System.Windows.Controls;
 using oop_coursework.Models;
 using oop_coursework.Services;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace oop_coursework.Views
 {
     public partial class AddUserWindow : Window
     {
         private readonly DataService _dataService;
-        private readonly User _existingUser;
+        private readonly User? _existingUser;
         private bool _isEditMode;
 
-        public AddUserWindow(DataService dataService, User existingUser = null)
+        public AddUserWindow(DataService dataService, User? existingUser = null)
         {
             InitializeComponent();
             _dataService = dataService;
@@ -38,6 +39,8 @@ namespace oop_coursework.Views
 
         private void LoadExistingUserData()
         {
+            if (_existingUser == null) return;
+
             FirstNameTextBox.Text = _existingUser.FirstName;
             LastNameTextBox.Text = _existingUser.LastName;
             UsernameTextBox.Text = _existingUser.Username;
@@ -53,11 +56,11 @@ namespace oop_coursework.Views
                     break;
                 case "Teacher":
                     RoleComboBox.SelectedIndex = 1;
-                    if (_existingUser is Teacher teacher && teacher.Subject != null)
+                    if (_existingUser is Teacher teacher)
                     {
                         foreach (ComboBoxItem item in SubjectComboBox.Items)
                         {
-                            if (item.Content.ToString() == teacher.Subject.Name)
+                            if (item.Content.ToString() == teacher.Subject?.Name)
                             {
                                 SubjectComboBox.SelectedItem = item;
                                 break;
@@ -98,24 +101,46 @@ namespace oop_coursework.Views
                 string.IsNullOrWhiteSpace(LastNameTextBox.Text) ||
                 string.IsNullOrWhiteSpace(UsernameTextBox.Text) ||
                 string.IsNullOrWhiteSpace(PasswordBox.Password) ||
-                !DateOfBirthPicker.SelectedDate.HasValue)
+                !DateOfBirthPicker.SelectedDate.HasValue ||
+                RoleComboBox.SelectedItem is not ComboBoxItem selectedRoleItem)
             {
                 MessageBox.Show("Please fill in all required fields.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            var role = (RoleComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
-            User user = _existingUser;
+            var role = selectedRoleItem.Content.ToString() ?? throw new InvalidOperationException("Role cannot be null");
+            User? user = _existingUser;
 
             if (!_isEditMode)
             {
                 user = role switch
                 {
-                    "Student" => new Student(),
-                    "Teacher" => new Teacher(),
-                    "Administrator" => new Administrator(),
+                    "Student" => new Student
+                    {
+                        FirstName = FirstNameTextBox.Text,
+                        LastName = LastNameTextBox.Text,
+                        Username = UsernameTextBox.Text,
+                        Password = PasswordBox.Password,
+                        Role = role,
+                        Specialty = SpecialtyTextBox.Text
+                    },
+                    "Teacher" => CreateTeacher(),
+                    "Administrator" => new Administrator
+                    {
+                        FirstName = FirstNameTextBox.Text,
+                        LastName = LastNameTextBox.Text,
+                        Username = UsernameTextBox.Text,
+                        Password = PasswordBox.Password,
+                        Role = role
+                    },
                     _ => throw new InvalidOperationException("Invalid role selected")
                 };
+            }
+
+            if (user == null)
+            {
+                MessageBox.Show("Failed to create or update user.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
 
             user.FirstName = FirstNameTextBox.Text;
@@ -136,18 +161,24 @@ namespace oop_coursework.Views
             }
             else if (user is Teacher teacher)
             {
-                if (SubjectComboBox.SelectedItem == null)
+                if (SubjectComboBox.SelectedItem is not ComboBoxItem selectedSubjectItem)
                 {
                     MessageBox.Show("Please select a subject.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
-                var subjectName = (SubjectComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
+                var subjectName = selectedSubjectItem.Content?.ToString();
+                if (string.IsNullOrEmpty(subjectName))
+                {
+                    MessageBox.Show("Invalid subject selected.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
                 Subject subject = subjectName switch
                 {
-                    "Mathematics" => new MathSubject(),
-                    "English" => new EnglishSubject(),
-                    "Art" => new ArtSubject(),
+                    "Mathematics" => new MathSubject { Name = "Mathematics" },
+                    "English" => new EnglishSubject { Name = "English" },
+                    "Art" => new ArtSubject { Name = "Art" },
                     _ => throw new InvalidOperationException("Invalid subject selected")
                 };
 
@@ -175,6 +206,41 @@ namespace oop_coursework.Views
 
             DialogResult = true;
             Close();
+        }
+
+        private Teacher CreateTeacher()
+        {
+            if (SubjectComboBox.SelectedItem is not ComboBoxItem selectedSubjectItem)
+            {
+                throw new InvalidOperationException("Please select a subject.");
+            }
+
+            var subjectName = selectedSubjectItem.Content?.ToString();
+            if (string.IsNullOrEmpty(subjectName))
+            {
+                throw new InvalidOperationException("Invalid subject selected.");
+            }
+
+            Subject subject = subjectName switch
+            {
+                "Mathematics" => new MathSubject { Name = "Mathematics" },
+                "English" => new EnglishSubject { Name = "English" },
+                "Art" => new ArtSubject { Name = "Art" },
+                _ => throw new InvalidOperationException("Invalid subject selected")
+            };
+
+            // Check if a subject with the same name already exists
+            var existingSubject = _dataService.GetSubjects().FirstOrDefault(s => s.Name == subjectName);
+
+            return new Teacher
+            {
+                FirstName = FirstNameTextBox.Text,
+                LastName = LastNameTextBox.Text,
+                Username = UsernameTextBox.Text,
+                Password = PasswordBox.Password,
+                Role = "Teacher",
+                Subject = existingSubject ?? subject
+            };
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)

@@ -5,7 +5,65 @@
     "LastName": "User",
     "Username": "admin",
     "Password": "admin",
-    "Role": "Administrator",
+    "Role": "\u0410\u0434\u043C\u0456\u043D\u0456\u0441\u0442\u0440\u0430\u0442\u043E\u0440",
     "DateOfBirth": "0001-01-01T00:00:00"
+  },
+  {
+    "Id": 2,
+    "FirstName": "aa",
+    "LastName": "aa",
+    "Username": "aa",
+    "Password": "aa",
+    "Role": "\u0421\u0442\u0443\u0434\u0435\u043D\u0442",
+    "DateOfBirth": "2011-01-01T00:00:00",
+    "Specialty": "121"
+  },
+  {
+    "Id": 3,
+    "FirstName": "ww",
+    "LastName": "ww",
+    "Username": "ww",
+    "Password": "ww",
+    "Role": "\u0412\u0438\u043A\u043B\u0430\u0434\u0430\u0447",
+    "DateOfBirth": "2001-01-11T00:00:00",
+    "Subject": {
+      "Id": 1,
+      "Name": "Mathematics",
+      "ExamDate": "2025-06-19T00:00:00",
+      "Credits": 5,
+      "IsExam": true
+    }
+  },
+  {
+    "Id": 4,
+    "FirstName": "ee",
+    "LastName": "ee",
+    "Username": "ee",
+    "Password": "ee",
+    "Role": "\u0412\u0438\u043A\u043B\u0430\u0434\u0430\u0447",
+    "DateOfBirth": "2001-11-01T00:00:00",
+    "Subject": {
+      "Id": 2,
+      "Name": "English",
+      "ExamDate": "2025-06-09T00:00:00",
+      "Credits": 4,
+      "IsExam": true
+    }
+  },
+  {
+    "Id": 5,
+    "FirstName": "rr",
+    "LastName": "rr",
+    "Username": "rr",
+    "Password": "rr",
+    "Role": "\u0412\u0438\u043A\u043B\u0430\u0434\u0430\u0447",
+    "DateOfBirth": "2001-01-11T00:00:00",
+    "Subject": {
+      "Id": 3,
+      "Name": "Art",
+      "ExamDate": "2025-07-11T00:00:00",
+      "Credits": 3,
+      "IsExam": false
+    }
   }
 ]
