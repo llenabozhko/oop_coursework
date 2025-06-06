@@ -168,8 +168,7 @@ namespace oop_coursework.Services
                     LastName = jsonObject.GetProperty("LastName").GetString() ?? string.Empty,
                     Username = username,
                     Password = password,
-                    Role = "Teacher",
-                    Subject = new MathSubject { Name = "Mathematics" }
+                    Role = "Teacher"
                 },
                 "Administrator" => new Administrator
                 {

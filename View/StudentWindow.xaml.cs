@@ -77,14 +77,6 @@ namespace oop_coursework.Views
                     Console.WriteLine(alertMessage); // Debug output
                 }
 
-                // Hardcoded alert if the exam date is not null
-                if (subject.ExamDate.HasValue)
-                {
-                    var examAlert = $"Exam for {subject.Name} is scheduled on {subject.ExamDate:d}.";
-                    _alerts.Add(examAlert);
-                    Console.WriteLine(examAlert); // Debug output
-                }
-
                 gradeViewModels.Add(grade);
             }
 
