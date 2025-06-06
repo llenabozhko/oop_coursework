@@ -32,12 +32,12 @@ namespace oop_coursework.Services
         {
             if (user is Administrator && _dataService.GetAdministrators().Count <= 1)
             {
-                return false; // Don't allow deleting the last administrator
+                return false;
             }
 
             if (user.Id == admin.Id)
             {
-                return false; // Don't allow self-deletion
+                return false;
             }
 
             return true;

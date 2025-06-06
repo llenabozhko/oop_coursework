@@ -176,9 +176,9 @@ namespace oop_coursework.Views
 
                 Subject subject = subjectName switch
                 {
-                    "Mathematics" => new MathSubject { Name = "Mathematics" },
-                    "English" => new EnglishSubject { Name = "English" },
-                    "Art" => new ArtSubject { Name = "Art" },
+                    "Математика" => new MathSubject { Name = "Математика" },
+                    "Англійська мова" => new EnglishSubject { Name = "Англійська мова" },
+                    "Мистецтво" => new ArtSubject { Name = "Мистецтво" },
                     _ => throw new InvalidOperationException("Invalid subject selected")
                 };
 
@@ -223,13 +223,12 @@ namespace oop_coursework.Views
 
             Subject subject = subjectName switch
             {
-                "Mathematics" => new MathSubject { Name = "Mathematics" },
-                "English" => new EnglishSubject { Name = "English" },
-                "Art" => new ArtSubject { Name = "Art" },
+                "Математика" => new MathSubject { Name = "Математика" },
+                "Англійська мова" => new EnglishSubject { Name = "Англійська мова" },
+                "Мистецтво" => new ArtSubject { Name = "Art" },
                 _ => throw new InvalidOperationException("Invalid subject selected")
             };
 
-            // Check if a subject with the same name already exists
             var existingSubject = _dataService.GetSubjects().FirstOrDefault(s => s.Name == subjectName);
 
             return new Teacher

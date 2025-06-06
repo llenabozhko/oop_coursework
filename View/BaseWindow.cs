@@ -10,10 +10,10 @@ namespace oop_coursework.Views
         protected void InitializeMenu()
         {
             var menu = new Menu();
-            var fileMenuItem = new MenuItem { Header = "Menu" };
+            var fileMenuItem = new MenuItem { Header = "Меню" };
             var logoutMenuItem = new MenuItem
             {
-                Header = "Exit",
+                Header = "Вийти",
                 Command = new RelayCommand(_ => Logout())
             };
 

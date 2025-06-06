@@ -67,7 +67,6 @@ namespace oop_coursework.Views
 
             GradesGrid.ItemsSource = gradeViewModels;
 
-            // Update alerts visibility
             if (_alerts.Any())
             {
                 AlertsPanel.Visibility = Visibility.Visible;

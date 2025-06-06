@@ -131,17 +131,17 @@ namespace oop_coursework.Models
         {
             get
             {
-                if (Score == 0) return "Not Graded";
-                if (Score >= 60) return "Passed";
+                if (Score == 0) return "Не оцінено";
+                if (Score >= 60) return "Здано";
                 if (RetakeScore.HasValue)
                 {
-                    return RetakeScore >= 60 ? "Passed (Retake)" : "Failed";
+                    return RetakeScore >= 60 ? "Здано (Перездача)" : "Не здано";
                 }
                 if (Subject.RetakeDate.HasValue && DateTime.Now < Subject.RetakeDate.Value)
                 {
-                    return "Retake Available";
+                    return "На перездачу";
                 }
-                return "Failed";
+                return "Не здано";
             }
         }
 

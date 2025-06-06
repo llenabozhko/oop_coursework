@@ -1,22 +1,8 @@
 [
   {
     "Id": 1,
-    "Name": "Mathematics",
+    "Name": "\u041C\u0430\u0442\u0435\u043C\u0430\u0442\u0438\u043A\u0430",
     "ExamDate": "2025-06-12T00:00:00.0000000",
-    "Credits": 10,
-    "IsExam": false
-  },
-  {
-    "Id": 2,
-    "Name": "English",
-    "ExamDate": "",
-    "Credits": 10,
-    "IsExam": false
-  },
-  {
-    "Id": 3,
-    "Name": "Art",
-    "ExamDate": "",
     "Credits": 10,
     "IsExam": false
   }

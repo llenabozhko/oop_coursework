@@ -121,7 +121,7 @@
                                 <DataGridTextColumn Header="Subject"
                                                   Binding="{Binding Subject.Name}"
                                                   Width="2*"/>
-                                <DataGridTextColumn Header="Exam Date"
+                                <DataGridTextColumn Header="Екзамен Date"
                                                   Width="*">
                                     <DataGridTextColumn.Binding>
                                         <Binding Path="Subject.ExamDate" StringFormat="d">
@@ -153,7 +153,7 @@
                                         <DataTrigger Binding="{Binding Subject.IsExamSoon}" Value="True">
                                             <Setter Property="Background" Value="#FFF3E0"/>
                                             <Setter Property="FontWeight" Value="Bold"/>
-                                            <Setter Property="ToolTip" Value="⚠️ Upcoming Exam! This exam is scheduled within the next 10 days"/>
+                                            <Setter Property="ToolTip" Value="⚠️ Upcoming Екзамен! This Екзамен is scheduled within the next 10 days"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                     <Style.Resources>

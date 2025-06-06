@@ -50,7 +50,7 @@ namespace oop_coursework.Views
         {
             ExamDatePicker.SelectedDate = _currentSubject.ExamDate ?? DateTime.Today;
             RetakeDatePicker.SelectedDate = _currentSubject.RetakeDate ?? DateTime.Today;
-            AssessmentTypeText.Text = _currentSubject.IsExam ? "Exam" : "Test";
+            AssessmentTypeText.Text = _currentSubject.IsExam ? "Екзамен" : "Тест";
         }
 
         private void ExamDatePicker_CalendarOpened(object sender, RoutedEventArgs e)
@@ -78,7 +78,7 @@ namespace oop_coursework.Views
         {
             if (!ExamDatePicker.SelectedDate.HasValue)
             {
-                MessageBox.Show("Please select an exam date.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please select an Екзамен date.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -88,7 +88,7 @@ namespace oop_coursework.Views
             {
                 if (RetakeDatePicker.SelectedDate.Value <= _currentSubject.ExamDate)
                 {
-                    MessageBox.Show("Retake date must be after the main exam date.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Retake date must be after the main Екзамен date.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
                 _currentSubject.RetakeDate = RetakeDatePicker.SelectedDate.Value;

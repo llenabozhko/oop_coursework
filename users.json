@@ -44,7 +44,7 @@
     "DateOfBirth": "2001-01-11T00:00:00",
     "Subject": {
       "Id": 2,
-      "Name": "English",
+      "Name": "Англійська мова",
       "ExamDate": "2025-07-06T16:30:10.628179+03:00",
       "Credits": 4,
       "IsExam": true
@@ -60,7 +60,7 @@
     "DateOfBirth": "2011-01-01T00:00:00",
     "Subject": {
       "Id": 3,
-      "Name": "Art",
+      "Name": "Мистецтво",
       "ExamDate": "2025-07-06T16:31:06.4439919+03:00",
       "Credits": 3,
       "IsExam": false

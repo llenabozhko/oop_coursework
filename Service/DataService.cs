@@ -192,9 +192,9 @@ namespace oop_coursework.Services
                 var subjectName = subjectElement.GetProperty("Name").GetString();
                 Subject subject = (Subject)(subjectName switch
                 {
-                    "Mathematics" => new MathSubject { Name = "Mathematics" },
-                    "English" => new EnglishSubject { Name = "English" },
-                    "Art" => new ArtSubject { Name = "Art" },
+                    "Математика" => new MathSubject { Name = "Математика" },
+                    "Англійська мова" => new EnglishSubject { Name = "Англійська мова" },
+                    "Мистецтво" => new ArtSubject { Name = "Мистецтво" },
                     _ => throw new JsonException($"Unknown subject: {subjectName}")
                 });
                 subject.Id = subjectElement.GetProperty("Id").GetInt32();
@@ -277,9 +277,9 @@ namespace oop_coursework.Services
 
         private static Subject CreateSubject(string name) => name switch
         {
-            "Mathematics" => new MathSubject { Name = "Mathematics" },
-            "English" => new EnglishSubject { Name = "English" },
-            "Art" => new ArtSubject { Name = "Art" },
+            "Математика" => new MathSubject { Name = "Математика" },
+            "Англійська мова" => new EnglishSubject { Name = "Англійська мова" },
+            "Мистецтво" => new ArtSubject { Name = "Мистецтво" },
             _ => throw new JsonException($"Unknown subject: {name}")
         };
 

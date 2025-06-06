@@ -13,7 +13,6 @@ namespace oop_coursework.Views
             InitializeComponent();
             _dataService = new DataService();
 
-            // Create default admin if no users exist
             if (_dataService.GetAdministrators().Count == 0)
             {
                 var admin = new Administrator
@@ -37,7 +36,7 @@ namespace oop_coursework.Views
 
             if (user == null)
             {
-                MessageBox.Show("Invalid username or password!", "Login Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Неправильний логін чи пароль", "Помилка входу", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -54,7 +53,7 @@ namespace oop_coursework.Views
                     mainWindow = new AdminWindow(admin, _dataService);
                     break;
                 default:
-                    MessageBox.Show("Invalid user type!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Невірний тип користувача", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
             }
 

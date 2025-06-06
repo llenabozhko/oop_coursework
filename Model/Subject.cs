@@ -42,9 +42,9 @@ namespace oop_coursework.Models
                 if (value.HasValue)
                 {
                     if (value.Value < DateTime.Now)
-                        throw new ArgumentException("Exam date cannot be in the past");
+                        throw new ArgumentException("Екзамен date cannot be in the past");
                     if (_retakeDate.HasValue && value.Value >= _retakeDate.Value)
-                        throw new ArgumentException("Exam date must be before retake date");
+                        throw new ArgumentException("Екзамен date must be before retake date");
                 }
                 _examDate = value;
             }

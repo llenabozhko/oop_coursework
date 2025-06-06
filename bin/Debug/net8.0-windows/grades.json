@@ -1,23 +1,23 @@
 [
   {
     "Id": 1,
-    "StudentId": 5,
+    "StudentId": 2,
     "SubjectId": 1,
-    "Score": 60,
+    "Score": 35,
     "RetakeScore": null,
     "Subject": {
       "Id": 1,
-      "Name": "Mathematics",
-      "ExamDate": "2025-06-11T00:00:00.0000000",
+      "Name": "\u041C\u0430\u0442\u0435\u043C\u0430\u0442\u0438\u043A\u0430",
+      "ExamDate": "2025-06-12T00:00:00.0000000",
       "Credits": 10,
       "IsExam": false
     },
     "Semester": 1,
-    "GradeDate": "2025-06-06T20:22:29.0838601+03:00",
+    "GradeDate": "2025-06-06T21:46:08.1925276+03:00",
     "RetakeDate": null,
-    "FinalScore": 60,
-    "Status": "Passed",
-    "CanRetake": false,
-    "NeedsRetake": false
+    "FinalScore": 35,
+    "Status": "Retake Available",
+    "CanRetake": true,
+    "NeedsRetake": true
   }
 ]

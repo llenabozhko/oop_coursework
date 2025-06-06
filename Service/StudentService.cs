@@ -36,7 +36,7 @@ namespace oop_coursework.Services
                 {
                     if (subject.IsExamSoon && grade.Score == 0)
                     {
-                        alerts.Add($"Upcoming exam in {subject.Name} on {subject.ExamDate:d}!");
+                        alerts.Add($"Upcoming Екзамен in {subject.Name} on {subject.ExamDate:d}!");
                     }
                     else if (subject.NeedsRetake(grade.Score))
                     {
@@ -44,7 +44,7 @@ namespace oop_coursework.Services
                         {
                             if (subject.IsRetakeSoon(grade.Score))
                             {
-                                alerts.Add($"URGENT: Retake exam in {subject.Name} on {subject.RetakeDate:d}! Your current score: {grade.Score}");
+                                alerts.Add($"URGENT: Retake Екзамен in {subject.Name} on {subject.RetakeDate:d}! Your current score: {grade.Score}");
                             }
                             else
                             {
