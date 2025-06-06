@@ -12,17 +12,9 @@ namespace oop_coursework.Views
     {
         private readonly Teacher _teacher;
         private readonly DataService _dataService;
+        private readonly TeacherService _teacherService;
         private Subject _currentSubject;
         private int _currentSemester = 1;
-
-        public class StudentGradeViewModel
-        {
-            public required Student Student { get; set; }
-            public required Grade Grade { get; set; }
-            public string MainExamScore => Grade.Score > 0 ? Grade.Score.ToString("F1") : "-";
-            public string RetakeScore => Grade.RetakeScore.HasValue ? Grade.RetakeScore.Value.ToString("F1") : "-";
-            public string FinalScore => Grade.FinalScore.ToString("F1");
-        }
 
         public TeacherWindow(Teacher teacher, DataService dataService)
         {
@@ -31,18 +23,16 @@ namespace oop_coursework.Views
 
             _teacher = teacher;
             _dataService = dataService;
+            _teacherService = new TeacherService(dataService);
 
-            // Set the current subject
             _currentSubject = _teacher.Subject ?? throw new InvalidOperationException("No subject assigned to teacher.");
 
             WelcomeText.Text = $"Welcome, {_teacher.FullName}!";
             SubjectNameText.Text = $"Subject: {_currentSubject.Name}";
 
-            // Setup semester selection
             SemesterComboBox.SelectedIndex = 0;
             SemesterComboBox.SelectionChanged += SemesterComboBox_SelectionChanged;
 
-            // Display exam dates
             LoadSubjectSettings();
             LoadStudentGrades();
         }
@@ -81,33 +71,7 @@ namespace oop_coursework.Views
 
         private void LoadStudentGrades()
         {
-            var students = _dataService.GetStudents();
-            var grades = _dataService.GetGrades()
-                .Where(g => g.SubjectId == _currentSubject.Id && g.Semester == _currentSemester)
-                .ToList();
-
-            var studentGrades = new List<StudentGradeViewModel>();
-
-            foreach (var student in students)
-            {
-                var grade = grades.FirstOrDefault(g => g.StudentId == student.Id) ??
-                    new Grade
-                    {
-                        StudentId = student.Id,
-                        SubjectId = _currentSubject.Id,
-                        Score = 0,
-                        Subject = _currentSubject,
-                        Semester = _currentSemester
-                    };
-
-                studentGrades.Add(new StudentGradeViewModel
-                {
-                    Student = student,
-                    Grade = grade
-                });
-            }
-
-            StudentsGrid.ItemsSource = studentGrades;
+            StudentsGrid.ItemsSource = _teacherService.GetStudentGrades(_currentSubject, _currentSemester);
         }
 
         private void UpdateSettings_Click(object sender, RoutedEventArgs e)
@@ -140,28 +104,7 @@ namespace oop_coursework.Views
         {
             if (StudentsGrid.ItemsSource is List<StudentGradeViewModel> studentGrades)
             {
-                foreach (var vm in studentGrades)
-                {
-                    if (vm.Grade.Score < 0 || vm.Grade.Score > 100)
-                    {
-                        MessageBox.Show($"Invalid grade for student {vm.Student.FullName}. Grade must be between 0 and 100.",
-                            "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        return;
-                    }
-
-                    // Enable retake tab if grade is below 60
-                    if (vm.Grade.Score < 60)
-                    {
-                        RetakeTab.IsEnabled = true;
-                    }
-
-                    if (vm.Grade.Id == 0)
-                    {
-                        _dataService.AddGrade(vm.Grade);
-                    }
-                }
-
-                _dataService.SaveChanges();
+                _teacherService.SaveGrades(studentGrades);
                 LoadStudentGrades();
                 MessageBox.Show("Grades saved successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }

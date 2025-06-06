@@ -12,6 +12,7 @@ namespace oop_coursework.Views
     {
         private readonly Student _student;
         private readonly DataService _dataService;
+        private readonly StudentService _studentService;
         private List<string> _alerts;
 
         public StudentWindow(Student student, DataService dataService)
@@ -22,6 +23,7 @@ namespace oop_coursework.Views
             _student = student;
             _dataService = dataService;
             _alerts = new List<string>();
+            _studentService = new StudentService(dataService);
 
             WelcomeText.Text = $"Welcome, {_student.FullName}!";
             SpecialtyText.Text = $"Specialty: {_student.Specialty}";
@@ -48,6 +50,7 @@ namespace oop_coursework.Views
 
             var gradeViewModels = new List<Grade>();
             _alerts.Clear();
+            _alerts = _studentService.GenerateAlerts(_student, semester);
 
             foreach (var subject in subjects)
             {
@@ -58,35 +61,6 @@ namespace oop_coursework.Views
                         Score = 0,
                         Semester = semester
                     };
-
-                // Проверяем уведомления только если это экзамен
-                if (subject.IsExam)
-                {
-                    // Если экзамен скоро и оценки еще нет
-                    if (subject.IsExamSoon && grade.Score == 0)
-                    {
-                        _alerts.Add($"Upcoming exam in {subject.Name} on {subject.ExamDate:d}!");
-                    }
-                    // Если нужна пересдача (оценка < 35)
-                    else if (subject.NeedsRetake(grade.Score))
-                    {
-                        if (subject.IsRetakeAvailable(grade.Score))
-                        {
-                            if (subject.IsRetakeSoon(grade.Score))
-                            {
-                                _alerts.Add($"URGENT: Retake exam in {subject.Name} on {subject.RetakeDate:d}! Your current score: {grade.Score}");
-                            }
-                            else
-                            {
-                                _alerts.Add($"You need to retake {subject.Name}. Retake scheduled for {subject.RetakeDate:d}. Your current score: {grade.Score}");
-                            }
-                        }
-                        else if (!subject.RetakeDate.HasValue)
-                        {
-                            _alerts.Add($"You need to retake {subject.Name}. Retake date not yet scheduled. Your current score: {grade.Score}");
-                        }
-                    }
-                }
 
                 gradeViewModels.Add(grade);
             }

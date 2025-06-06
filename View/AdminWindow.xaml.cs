@@ -11,6 +11,7 @@ namespace oop_coursework.Views
     {
         private readonly Administrator _admin;
         private readonly DataService _dataService;
+        private readonly AdminService _adminService;
 
         public AdminWindow(Administrator admin, DataService dataService)
         {
@@ -19,6 +20,7 @@ namespace oop_coursework.Views
 
             _admin = admin;
             _dataService = dataService;
+            _adminService = new AdminService(dataService);
 
             WelcomeText.Text = $"Welcome, {_admin.FullName}!";
             RoleFilter.SelectedIndex = 0;
@@ -29,17 +31,7 @@ namespace oop_coursework.Views
 
         private void LoadUsers(string? roleFilter = null)
         {
-            var users = _dataService.GetStudents()
-                .Cast<User>()
-                .Concat(_dataService.GetTeachers())
-                .Concat(_dataService.GetAdministrators());
-
-            if (!string.IsNullOrEmpty(roleFilter))
-            {
-                users = users.Where(u => u.Role == roleFilter);
-            }
-
-            UsersGrid.ItemsSource = users.ToList();
+            UsersGrid.ItemsSource = _adminService.GetAllUsers(roleFilter);
         }
 
         private void RoleFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -78,20 +70,9 @@ namespace oop_coursework.Views
 
                 if (user == null) return;
 
-                // Don't allow deleting the last administrator
-                if (user is Administrator && _dataService.GetAdministrators().Count <= 1)
+                if (!_adminService.CanDeleteUser(user, _admin))
                 {
-                    MessageBox.Show("Cannot delete the last administrator account.",
-                        "Delete Error",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error);
-                    return;
-                }
-
-                // Don't allow self-deletion
-                if (user.Id == _admin.Id)
-                {
-                    MessageBox.Show("You cannot delete your own account.",
+                    MessageBox.Show("Cannot delete this user.",
                         "Delete Error",
                         MessageBoxButton.OK,
                         MessageBoxImage.Error);
@@ -109,7 +90,7 @@ namespace oop_coursework.Views
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    _dataService.DeleteUser(userId);
+                    _adminService.DeleteUser(userId);
                     LoadUsers();
                     MessageBox.Show("User deleted successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
