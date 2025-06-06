@@ -2,21 +2,21 @@
   {
     "Id": 1,
     "Name": "Mathematics",
-    "ExamDate": "2025-06-19T00:00:00",
+    "ExamDate": "2025-07-06T16:29:59.9820611+03:00",
     "Credits": 5,
     "IsExam": true
   },
   {
     "Id": 2,
     "Name": "English",
-    "ExamDate": "2025-06-09T00:00:00",
+    "ExamDate": "2025-07-06T16:30:10.628179+03:00",
     "Credits": 4,
     "IsExam": true
   },
   {
     "Id": 3,
     "Name": "Art",
-    "ExamDate": "2025-07-11T00:00:00",
+    "ExamDate": "2025-07-06T16:31:06.4439919+03:00",
     "Credits": 3,
     "IsExam": false
   }

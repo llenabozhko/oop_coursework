@@ -156,31 +156,31 @@ namespace oop_coursework.Services
 
             User user = role switch
             {
-                "Student" or "Студент" => new Student
+                "Student" => new Student
                 {
                     FirstName = firstName,
                     LastName = lastName,
                     Username = username,
                     Password = password,
-                    Role = "Студент",
+                    Role = "Student",
                     Specialty = jsonObject.GetProperty("Specialty").GetString() ?? string.Empty
                 },
-                "Teacher" or "Викладач" => new Teacher
+                "Teacher" => new Teacher
                 {
                     FirstName = firstName,
                     LastName = lastName,
                     Username = username,
                     Password = password,
-                    Role = "Викладач",
-                    Subject = new MathSubject { Name = "Математика" }
+                    Role = "Teacher",
+                    Subject = new MathSubject { Name = "Mathematics" }
                 },
-                "Administrator" or "Адміністратор" => new Administrator
+                "Administrator" => new Administrator
                 {
                     FirstName = firstName,
                     LastName = lastName,
                     Username = username,
                     Password = password,
-                    Role = "Адміністратор"
+                    Role = "Administrator"
                 },
                 _ => throw new JsonException($"Unknown user role: {role}")
             };
