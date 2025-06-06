@@ -15,14 +15,14 @@
     "Username": "ww",
     "Password": "ww",
     "Role": "Teacher",
-    "DateOfBirth": "2001-01-11T00:00:00",
+    "DateOfBirth": "2019-03-01T00:00:00",
     "Subject": {
       "Id": 1,
       "Name": "Mathematics",
-      "ExamDate": "",
-      "RetakeDate": "2025-06-20T00:00:00",
-      "Credits": 5,
-      "IsExam": true
+      "ExamDate": "2025-06-12T00:00:00.0000000",
+      "RetakeDate": "2025-06-13T00:00:00",
+      "Credits": 10,
+      "IsExam": false
     }
   },
   {
@@ -36,10 +36,9 @@
     "Subject": {
       "Id": 2,
       "Name": "English",
-      "ExamDate": "2025-06-06T00:00:00.0000000\u002B03:00",
-      "RetakeDate": "2025-06-18T00:00:00",
-      "Credits": 4,
-      "IsExam": true
+      "ExamDate": "",
+      "Credits": 10,
+      "IsExam": false
     }
   },
   {
@@ -49,13 +48,12 @@
     "Username": "rr",
     "Password": "rr",
     "Role": "Teacher",
-    "DateOfBirth": "2001-01-11T00:00:00",
+    "DateOfBirth": "2011-11-01T00:00:00",
     "Subject": {
       "Id": 3,
       "Name": "Art",
       "ExamDate": "",
-      "RetakeDate": "2025-06-10T00:00:00",
-      "Credits": 3,
+      "Credits": 10,
       "IsExam": false
     }
   },
@@ -66,7 +64,7 @@
     "Username": "aa",
     "Password": "aa",
     "Role": "Student",
-    "DateOfBirth": "2011-01-01T00:00:00",
+    "DateOfBirth": "2011-01-11T00:00:00",
     "Specialty": "121"
   }
 ]
