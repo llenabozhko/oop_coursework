@@ -4,7 +4,7 @@
     "StudentId": 5,
     "SubjectId": 1,
     "Score": 35,
-    "RetakeScore": null,
+    "RetakeScore": 60,
     "Subject": {
       "Id": 1,
       "Name": "Mathematics",
@@ -15,9 +15,9 @@
     "Semester": 1,
     "GradeDate": "2025-06-06T16:45:33.2228346+03:00",
     "RetakeDate": null,
-    "FinalScore": 35,
-    "Status": "Failed",
-    "CanRetake": true,
+    "FinalScore": 60,
+    "Status": "Passed (Retake)",
+    "CanRetake": false,
     "NeedsRetake": false
   }
 ]

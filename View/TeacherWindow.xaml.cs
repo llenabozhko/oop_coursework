@@ -32,16 +32,8 @@ namespace oop_coursework.Views
             _teacher = teacher;
             _dataService = dataService;
 
-            // Hide subject selection as teacher has only one subject
-            SubjectSelectionPanel.Visibility = Visibility.Collapsed;
-
-            _currentSubject = _teacher.Subject;
-            if (_currentSubject == null)
-            {
-                MessageBox.Show("No subject assigned to teacher.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                Close();
-                return;
-            }
+            // Set the current subject
+            _currentSubject = _teacher.Subject ?? throw new InvalidOperationException("No subject assigned to teacher.");
 
             WelcomeText.Text = $"Welcome, {_teacher.FullName}!";
             SubjectNameText.Text = $"Subject: {_currentSubject.Name}";
@@ -50,6 +42,7 @@ namespace oop_coursework.Views
             SemesterComboBox.SelectedIndex = 0;
             SemesterComboBox.SelectionChanged += SemesterComboBox_SelectionChanged;
 
+            // Display exam dates
             LoadSubjectSettings();
             LoadStudentGrades();
         }
@@ -65,9 +58,25 @@ namespace oop_coursework.Views
 
         private void LoadSubjectSettings()
         {
-            ExamDatePicker.SelectedDate = _currentSubject.ExamDate;
-            RetakeDatePicker.SelectedDate = _currentSubject.RetakeDate;
+            ExamDatePicker.SelectedDate = _currentSubject.ExamDate ?? DateTime.Today;
+            RetakeDatePicker.SelectedDate = _currentSubject.RetakeDate ?? DateTime.Today;
             AssessmentTypeText.Text = _currentSubject.IsExam ? "Exam" : "Test";
+        }
+
+        private void ExamDatePicker_CalendarOpened(object sender, RoutedEventArgs e)
+        {
+            if (!ExamDatePicker.SelectedDate.HasValue)
+            {
+                ExamDatePicker.SelectedDate = DateTime.Today;
+            }
+        }
+
+        private void RetakeDatePicker_CalendarOpened(object sender, RoutedEventArgs e)
+        {
+            if (!RetakeDatePicker.SelectedDate.HasValue)
+            {
+                RetakeDatePicker.SelectedDate = DateTime.Today;
+            }
         }
 
         private void LoadStudentGrades()
